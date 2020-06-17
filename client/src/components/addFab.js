@@ -12,7 +12,7 @@ const useStyle = makeStyles((theme) => ({
 export default function AddFab(props) {
     const classes = useStyle();
     return (
-        <Fab color="primary" aria-label="add" className={classes.fab}>
+        <Fab color="primary" aria-label="add" className={classes.fab} onClick={props.onClick}>
             <AddIcon />
         </Fab>
     );
