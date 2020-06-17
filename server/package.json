@@ -1,0 +1,24 @@
+{
+  "name": "sms-server",
+  "version": "1.0.0",
+  "description": "The server for the Site management System",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "site",
+    "management",
+    "system",
+    "site-management-system",
+    "sms",
+    "construction-management"
+  ],
+  "author": "Pranay Gupta",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-validator": "^6.5.0",
+    "mongoose": "^5.9.19"
+  }
+}
