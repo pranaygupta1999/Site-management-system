@@ -1,5 +1,5 @@
 const Project = require("../models/ProjectModel");
-const {validationResult} = require('express-validator')
+const { validationResult } = require('express-validator')
 
 module.exports = {
     getAllProjects: async function (req, res) {
@@ -41,7 +41,7 @@ module.exports = {
                 ]
             }
         ).count();
-        res.status(200).json({count:count});
+        res.status(200).json({ count: count });
     },
     getCompletedProjectsCount: async function (req, res) {
         const count = await Project.find(
@@ -52,21 +52,26 @@ module.exports = {
                 }
             }
         ).count();
-        res.status(200).json({count:count});
+        res.status(200).json({ count: count });
     },
-    addProject:async function(req, res){
+    addProject: async function (req, res) {
         const errors = validationResult(req)
-        if(errors.array().length){
-            res.status(400).json({msg:"Insertion of Project failed", err:errors.array()});
+        if (errors.array().length) {
+            res.status(400).json({ msg: "Insertion of Project failed", err: errors.array() });
             return;
         }
         try {
             const project = new Project(req.body);
             await project.save();
-            res.status(200).json({msg: "Project added successfully"})
+            console.log("Saved project")
+            res.status(200).json({ msg: "Project added successfully" })
         } catch (error) {
-            res.status(500).json({msg:"Insertion of project faild", err:error});
+            res.status(500).json({ msg: "Insertion of project faild", err: error });
         }
+    },
+    getProjectNames: async function (req, res) {
+        const projects = await Project.find({}, { name: 1 });
+        res.status(200).json(projects);
     }
 
 }
