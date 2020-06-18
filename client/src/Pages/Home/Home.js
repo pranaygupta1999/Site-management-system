@@ -8,6 +8,8 @@ import Header from './Header'
 import Projects from '../Projects/Projects'
 import { Container } from "react-bootstrap";
 import Activities from "../Activities/Activities";
+import Dashboard from "../Dashboard/Dashboard"
+import Expenses from "../Expenses/Expenses"
 export default class Home extends Component {
 
     render() {
@@ -22,8 +24,12 @@ export default class Home extends Component {
                     <Route exact path="/activities">
                         <Activities/>
                     </Route>
-                    <Route exact path="/expenses"></Route>
-                    <Route exact path="/dashboard"></Route>
+                    <Route exact path="/dashboard">
+                        <Dashboard/>
+                    </Route>
+                    <Route exact path="/expenses">
+                        <Expenses/>
+                    </Route>
                 </Switch>
 
                 </Container>
