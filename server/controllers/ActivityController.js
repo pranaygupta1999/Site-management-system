@@ -24,4 +24,12 @@ module.exports = {
             res.status(500).json({ msg: "Insertion of activity faild", err: error });
         }
     },
+    deleteActivity: async function (req, res) {
+        try {
+            const result = await Activity.remove({ _id: req.params.id });
+            res.status(200).json({ msg: "Activity deleted successfully", details: result });
+        } catch (error) {
+            res.status(500).json({ msg: "Could not delete activity", err: error });
+        }
+    }
 }

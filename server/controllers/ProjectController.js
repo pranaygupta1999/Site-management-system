@@ -63,7 +63,6 @@ module.exports = {
         try {
             const project = new Project(req.body);
             await project.save();
-            console.log("Saved project")
             res.status(200).json({ msg: "Project added successfully" })
         } catch (error) {
             res.status(500).json({ msg: "Insertion of project faild", err: error });
@@ -72,6 +71,15 @@ module.exports = {
     getProjectNames: async function (req, res) {
         const projects = await Project.find({}, { name: 1 });
         res.status(200).json(projects);
+    },
+
+    deleteProject: async function (req, res) {
+        try {
+            const result = await Project.remove({ _id: req.params.id });
+            res.status(200).json({ msg: "Project deleted successfully", details: result });
+        } catch (error) {
+            res.status(500).json({ msg: "Could not delete project", err: error });
+        }
     }
 
 }

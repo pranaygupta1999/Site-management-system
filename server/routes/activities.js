@@ -4,6 +4,6 @@ const ActivityValidation = require('../validation/ActivityValidation')
 router.get('/getall', ActivityController.getAllActivities);
 router.get('/gettotalcount', ActivityController.getTotalActivityCount);
 router.post('/add', ActivityValidation, ActivityController.addActivity);
-
+router.delete('/delete/:id', ActivityController.deleteActivity);
 module.exports = router;
 

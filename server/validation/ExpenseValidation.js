@@ -10,9 +10,10 @@ function isValidDate(date) {
     };
 }
 module.exports = [
-    body('name', "Name is required").exists(),
     body('type', "Type is required").exists(),
-    body('timeFrom', "Start time is invalid").exists().custom(isValidDate),
-    body('timeTo', 'End time is not valid').custom(isValidDate),
-    body('project', "Invalid project id").exists().isAlphanumeric()
+    body('amount', "Amount is required").exists().isNumeric(),
+    body('status', "Status is required").exists(),
+    body('project', "Invalid project id").exists().isAlphanumeric(),
+    body('image', "Mode is required").exists(),
+    body('date', "Date is invalid").exists().custom(isValidDate)
 ];
