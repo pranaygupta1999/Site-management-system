@@ -137,3 +137,86 @@ db.activities.insertMany([
         dateCreated: new Date(Date.now())
     },
 ]);
+db.expenses.remove({});
+db.expenses.insertMany([
+    {
+        type: "Food",
+        detail: "Lunch with the client",
+        amount: 500,
+        status: "due",
+        project: db.projects.findOne({ name: "Gupta towers" }, { _id: 1 })._id,
+        image:"cash",
+        date: new Date("2019-05-06"),
+        dateCreated: new Date()
+    },
+    {
+        type: "Order",
+        detail: "Ordering Iron ores",
+        amount: 5000,
+        status: "paid",
+        project: db.projects.findOne({ name: "Gupta towers" }, { _id: 1 })._id,
+        image:"cash",
+        date: new Date("2018-03-06"),
+        dateCreated: new Date()
+    },
+    {
+        type: "Order",
+        detail: "Ordering 2 trucks",
+        amount: 2500000,
+        status: "due",
+        project: db.projects.findOne({ name: "Gupta towers" }, { _id: 1 })._id,
+        image:"check",
+        date: new Date("2016-03-20"),
+        dateCreated: new Date()
+    },
+    {
+        type: "Order",
+        detail: "Ordering 2 van",
+        amount: 2000000,
+        status: "paid",
+        project: db.projects.findOne({ name: "Pratik Consultancy" }, { _id: 1 })._id,
+        image:"check",
+        date: new Date("2019-02-25"),
+        dateCreated: new Date()
+    },
+    {
+        type: "Repair",
+        detail: "Repairing building structure",
+        amount: 50000,
+        status: "paid",
+        project: db.projects.findOne({ name: "Pratik Consultancy" }, { _id: 1 })._id,
+        image:"neft",
+        date: new Date("2020-02-02"),
+        dateCreated: new Date()
+    },
+    {
+        type: "Order",
+        detail: "Order weight cables",
+        amount: 25000,
+        status: "paid",
+        project: db.projects.findOne({ name: "Pratik Consultancy" }, { _id: 1 })._id,
+        image:"cash",
+        date: new Date("2019-12-06"),
+        dateCreated: new Date()
+    },
+    {
+        type: "Repair",
+        detail: "Repairing Wall structure",
+        amount: 20000,
+        status: "paid",
+        project: db.projects.findOne({ name: "Pranay mount" }, { _id: 1 })._id,
+        image:"check",
+        date: new Date("2019-06-30"),
+        dateCreated: new Date()
+    },
+    {
+        type: "Order",
+        detail: "Order 2 ton cement",
+        amount: 100000,
+        status: "paid",
+        project: db.projects.findOne({ name: "Pranay mount" }, { _id: 1 })._id,
+        image:"neft",
+        date: new Date(),
+        dateCreated: new Date()
+    }
+]);

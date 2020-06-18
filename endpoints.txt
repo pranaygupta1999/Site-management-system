@@ -1,0 +1,16 @@
+*Project Endpoints*
+- get'/getall',
+- get'/gettotalcount',
+- get'/getactive',
+- get'/getactivecount',
+- get'/getcompleted',
+- get'/getcompletedcount',
+- post'/add', 
+- get'/getnames',
+- delte '/delete/:id'
+
+*Activity Endpoints*
+- get '/getall',
+- get '/gettotalcount'
+- post '/add', ActivityValidation
+- delete '/delete/:id'
