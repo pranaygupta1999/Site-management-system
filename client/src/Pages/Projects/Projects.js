@@ -9,7 +9,7 @@ import ContentLoading from '../../components/contentLoading'
 import SERVER_URL from '../../config'
 
 export default class Projects extends Component {
-    state = { projects: [], isProjectFormOpen: false, showSnackbar: false, message: "", isUploading: false, isContentLoading: true }
+    state = { projects: [], isProjectFormOpen: false, showSnackbar: false, message: "", isUploading: false, isContentLoading: true, editProject: null }
 
     toggleProjectFormClose = () => {
         this.setState((prevState) => {
@@ -17,11 +17,15 @@ export default class Projects extends Component {
         });
     }
     handleProjectFormClose = () => {
-        this.setState({ isProjectFormOpen: false });
+        this.setState({ isProjectFormOpen: false, editProject: null });
     }
     handleSnackBarClose = () => {
         this.setState({ showSnackbar: false, message: "" });
 
+    }
+    handleEdit = (project) => {
+        this.toggleProjectFormClose();
+        this.setState({ editProject: project });
     }
 
     //========= API REQUESTS ===============
@@ -55,10 +59,36 @@ export default class Projects extends Component {
         }
         this.reload();
     }
+    editProjectInDatabase = async (projectBody) => {
+        this.setState({ isUploading: true })
+        const fetchData = await fetch(SERVER_URL + "/api/projects/edit", {
+            method: "put",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(projectBody)
+        });
+        this.setState({ isUploading: false })
+        if (fetchData.status === 200) {
+            this.setState({ showSnackbar: true, message: "Successfully edited" });
+        }
+        else {
+            this.setState({ showSnackbar: true, message: "Could not edit Project" });
+        }
+        this.reload();
+    }
     async reload() {
         this.setState({ isContentLoading: true });
         const data = await fetch("http://localhost:5000/api/projects/getAll");
         const projects = await data.json();
+        projects.forEach(project => {
+            console.log(project);
+            project.startDate = project.startDate.split('T')[0];
+            if (project.completionDate)
+                project.completionDate = project?.completionDate.split('T')[0];
+            if (project.expectedCompletionDate)
+                project.expectedCompletionDate = project?.expectedCompletionDate.split('T')[0];
+        });
         this.setState({ projects: projects });
         this.setState({ isContentLoading: false });
     }
@@ -75,7 +105,7 @@ export default class Projects extends Component {
                             <ContentLoading /> :
                             <Grid container spacing={3}>
                                 {this.state.projects.length && this.state.projects.map((project, index) => {
-                                    return (<Project eventKey={index} project={project} onDelete={this.deleteProject} />)
+                                    return (<Project eventKey={index} project={project} onDelete={this.deleteProject} onEdit={this.handleEdit} />)
                                 })}
                             </Grid>
                     }
@@ -84,7 +114,7 @@ export default class Projects extends Component {
                 <div>
                     {
                         this.state.isProjectFormOpen ?
-                            <ProjectForm open={this.state.isProjectFormOpen} onClose={this.handleProjectFormClose} onSave={this.addProjectToDatabase} />
+                            <ProjectForm open={this.state.isProjectFormOpen} onClose={this.handleProjectFormClose} onSave={this.addProjectToDatabase} project={this.state.editProject} onEdit={this.editProjectInDatabase} />
                             :
                             null
                     }

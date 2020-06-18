@@ -7,6 +7,7 @@ export default class ProjectForm extends Component {
         console.log("running again")
         if (props.project) {
             this.state = { project: { ...this.props.project } };
+            this.onSaveClickHandler = this.props.onEdit;
         }
         else {
             this.state = {
@@ -18,6 +19,7 @@ export default class ProjectForm extends Component {
                     expectedCompletionDate: ""
                 },
             };
+            this.onSaveClickHandler = this.props.onSave;
         }
     }
     onValueChange = (e) => {
@@ -29,8 +31,11 @@ export default class ProjectForm extends Component {
     handleOnSubmit = async (e) => {
         e.preventDefault();
         const projectBody = this.state.project
-        this.props.onSave(projectBody);
+        this.onSaveClickHandler(projectBody);
         this.props.onClose();
+
+    }
+    handleEdit = () => {
 
     }
 
@@ -44,11 +49,11 @@ export default class ProjectForm extends Component {
                     <form onSubmit={this.handleOnSubmit}>
                         <DialogContentText>
 
-                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="name" label="Name" value={this.state.name} variant="outlined" /></DialogContent>
-                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="address" label="Address" variant="outlined" multiline rows={4} value={this.state.address} /></DialogContent>
-                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="startDate" label="Start Date" value={this.state.startDate} type="date" InputLabelProps={{ shrink: true }} /></DialogContent>
-                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="completionDate" label="Completion Date" value={this.state.completionDate} type="date" InputLabelProps={{ shrink: true }} /></DialogContent>
-                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="expectedCompletionDate" label="Expected End Date" value={this.state.expectedCompletionDate} type="date" InputLabelProps={{ shrink: true }} /></DialogContent>
+                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="name" label="Name" value={this.state.project.name} variant="outlined" /></DialogContent>
+                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="address" label="Address" variant="outlined" multiline rows={4} value={this.state.project.address} /></DialogContent>
+                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="startDate" label="Start Date" value={this.state.project.startDate} type="date" InputLabelProps={{ shrink: true }} /></DialogContent>
+                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="completionDate" label="Completion Date" value={this.state.project.completionDate} type="date" InputLabelProps={{ shrink: true }} /></DialogContent>
+                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="expectedCompletionDate" label="Expected End Date" value={this.state.project.expectedCompletionDate} type="date" InputLabelProps={{ shrink: true }} /></DialogContent>
                         </DialogContentText>
                         <DialogActions>
                             <Button onClick={this.props.onClose} color="primary">
