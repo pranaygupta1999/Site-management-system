@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { AppBar, Toolbar, IconButton, Typography, Button, Drawer, List, ListItem, ListItemText } from "@material-ui/core";
-import { Menu as MenuIcon } from "@material-ui/icons";
+import { AppBar, Toolbar, IconButton, Typography, Button, Drawer, List, ListItem, ListItemText, ListItemIcon } from "@material-ui/core";
+import { Menu as MenuIcon, DashboardRounded as DashboardIcon, HomeWorkRounded as ProjectsIcon, MonetizationOnRounded as ExpensesIcon, BuildRounded as ActivitiesIcon } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 
 const useStyles = makeStyles({
@@ -10,18 +10,19 @@ const useStyles = makeStyles({
     width: 250,
     paddingTop: 30
   },
-  menuItem:{
-    textDecoration:"none"
+  menuItem: {
+    textDecoration: "none"
   },
-  "menuItem:hover":{
-    textDecoration:"none"
+  "menuItem:hover": {
+    textDecoration: "none"
   }
 });
 
-export default function (props) {
+function Header(props) {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
-  const menuItems = ["Projects", "Activities", "Expenses"]
+  const menuItems = [{ text: "Dashboard", icon: <DashboardIcon /> }, { text: "Projects", icon: <ProjectsIcon /> }, { text: "Activities", icon: <ActivitiesIcon /> }, { text: "Expenses", icon: <ExpensesIcon /> }];
   const classes = useStyles();
+  const title = props.location.pathname.slice(1).toUpperCase();
   return (
     [
       <AppBar position="static">
@@ -29,7 +30,7 @@ export default function (props) {
           <IconButton color="inherit" onClick={() => setDrawerOpen(!isDrawerOpen)}>
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className="flex-grow-1">Site Management System</Typography>
+          <Typography variant="h6" className="flex-grow-1">{title}</Typography>
           <Button color="inherit">Logout</Button>
         </Toolbar>
       </AppBar>,
@@ -38,7 +39,10 @@ export default function (props) {
           {menuItems.map((menu, index) => {
             return (
               <ListItem key={index} button  >
-                <ListItemText><Link  className={classes.menuItem} color="inherit" to={"/" + menu.toLowerCase()}>{menu}</Link></ListItemText>
+                <ListItemIcon>
+                  {menu.icon}
+                </ListItemIcon>
+                <ListItemText><Link className={classes.menuItem} color="inherit" to={"/" + menu.text.toLowerCase()}>{menu.text}</Link></ListItemText>
               </ListItem>
             );
           })}
@@ -47,3 +51,4 @@ export default function (props) {
       </Drawer>
     ])
 }
+export default withRouter(Header);
