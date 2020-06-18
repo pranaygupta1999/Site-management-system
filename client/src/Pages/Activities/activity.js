@@ -1,5 +1,6 @@
 import React from 'react'
-import { Card, CardContent, Typography, Grid, Divider } from "@material-ui/core";
+import { Card, CardContent, Typography, Grid, Divider, CardActions, Button } from "@material-ui/core";
+import { Delete as DeleteIcon, Edit as EditIcon } from "@material-ui/icons"
 export default function (props) {
     return (
         <Grid item xs={12} sm={4} md={3}>
@@ -26,6 +27,15 @@ export default function (props) {
                     </table>
 
                 </CardContent>
+                <Divider light />
+                <CardActions>
+                    <Button size="small" color="primary" startIcon={<EditIcon />}>
+                        Edit
+                    </Button>
+                    <Button size="small" color="secondary" startIcon={<DeleteIcon />} onClick={() => props.onDelete(props.activity._id)}>
+                        Delete
+                    </Button>
+                </CardActions>
             </Card>
         </Grid>
 

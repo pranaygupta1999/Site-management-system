@@ -4,9 +4,11 @@ import Activity from './activity'
 import AddFab from "../../components/addFab";
 import ActivityForm from "./activityForm";
 import CustomSnackbar from '../../components/snackbar'
+import Spinner from '../../components/spinner'
+import ContentLoading from '../../components/contentLoading'
 import SERVER_URL from '../../config'
 export default class Activities extends Component {
-    state = { activities: [], isActivityFormOpen: false, showSnackbar: false, message: "", projectsList: [] }
+    state = { activities: [], isActivityFormOpen: false, showSnackbar: false, message: "", projectsList: [], isUploading: false, isContentLoading: true }
 
     toggleActivityFormClose = () => {
         this.setState((prevState) => {
@@ -20,8 +22,10 @@ export default class Activities extends Component {
         this.setState({ showSnackbar: false, message: "" });
 
     }
+
+    // =============== API Requests ===================
     addActivityToDatabase = async (activityBody) => {
-        console.log(activityBody);
+        this.setState({ isUploading: true })
         const fetchData = await fetch(SERVER_URL + "/api/activities/add", {
             method: "post",
             headers: {
@@ -29,29 +33,54 @@ export default class Activities extends Component {
             },
             body: JSON.stringify(activityBody)
         });
+        this.setState({ isUploading: false })
         if (fetchData.status === 200) {
             this.setState({ showSnackbar: true, message: "Successfully added" });
         }
         else {
             this.setState({ showSnackbar: true, message: "Could not add Activity" });
         }
+        this.reload();
     }
 
+    deleteActivity = async (id) => {
+        this.setState({ isUploading: true });
+        const fetchData = await fetch("http://localhost:5000/api/activities/delete/" + id, { method: "delete" });
+        this.setState({ isUploading: false })
+        if (fetchData.status === 200) {
+            this.setState({ showSnackbar: true, message: "Successfully deleted" });
+        }
+        else {
+            this.setState({ showSnackbar: true, message: "Could not delete Activity" });
+        }
+        this.reload();
+    }
 
-    async componentDidMount() {
+    async reload() {
+        this.setState({ isContentLoading: true });
         const data = await fetch("http://localhost:5000/api/activities/getAll");
         const activities = await data.json();
         this.setState({ activities: activities });
+        this.setState({ isContentLoading: false });
+    }
+    componentDidMount() {
+        this.reload();
     }
 
     render() {
         return (
             [
-                <Grid container spacing={3}>
-                    {this.state.activities.length && this.state.activities.map((activity, index) => {
-                        return ([<Activity eventKey={index} activity={activity} />, <br />])
-                    })}
-                </Grid>,
+                <div>
+                    {
+                        this.state.isContentLoading ?
+                            <ContentLoading /> :
+                            <Grid container spacing={3}>
+                                {this.state.activities.length && this.state.activities.map((activity, index) => {
+                                    return (<Activity eventKey={index} activity={activity} onDelete={this.deleteActivity} />)
+                                })}
+                            </Grid>
+                    }
+                </div>,
                 <AddFab onClick={this.toggleActivityFormClose} />,
                 <div>
                     {
@@ -61,9 +90,13 @@ export default class Activities extends Component {
                             null
                     }
                 </div>,
-                <CustomSnackbar open={this.state.showSnackbar} message={this.state.message} onClose={this.handleSnackBarClose} />
-
-
+                <CustomSnackbar open={this.state.showSnackbar} message={this.state.message} onClose={this.handleSnackBarClose} />,
+                <div>
+                    {
+                        this.state.isUploading ?
+                            <Spinner /> : null
+                    }
+                </div>
             ]
         )
 
