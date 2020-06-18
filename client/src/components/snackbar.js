@@ -15,7 +15,7 @@ export default function SimpleSnackbar(props) {
                 horizontal: 'left',
             }}
             open={props.open}
-            autoHideDuration={6000}
+            autoHideDuration={5000}
             onClose={props.onClose}
             message={props.message}
 
