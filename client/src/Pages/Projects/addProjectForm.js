@@ -49,9 +49,9 @@ export default class ProjectForm extends Component {
                     <form onSubmit={this.handleOnSubmit}>
                         <DialogContentText>
 
-                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="name" label="Name" value={this.state.project.name} variant="outlined" /></DialogContent>
-                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="address" label="Address" variant="outlined" multiline rows={4} value={this.state.project.address} /></DialogContent>
-                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="startDate" label="Start Date" value={this.state.project.startDate} type="date" InputLabelProps={{ shrink: true }} /></DialogContent>
+                            <DialogContent><TextField required fullWidth onChange={this.onValueChange} name="name" label="Name" value={this.state.project.name} variant="outlined" /></DialogContent>
+                            <DialogContent><TextField required fullWidth onChange={this.onValueChange} name="address" label="Address" variant="outlined" multiline rows={4} value={this.state.project.address} /></DialogContent>
+                            <DialogContent><TextField required fullWidth onChange={this.onValueChange} name="startDate" label="Start Date" value={this.state.project.startDate} type="date" InputLabelProps={{ shrink: true }} /></DialogContent>
                             <DialogContent><TextField fullWidth onChange={this.onValueChange} name="completionDate" label="Completion Date" value={this.state.project.completionDate} type="date" InputLabelProps={{ shrink: true }} /></DialogContent>
                             <DialogContent><TextField fullWidth onChange={this.onValueChange} name="expectedCompletionDate" label="Expected End Date" value={this.state.project.expectedCompletionDate} type="date" InputLabelProps={{ shrink: true }} /></DialogContent>
                         </DialogContentText>

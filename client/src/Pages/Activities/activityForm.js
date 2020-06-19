@@ -61,14 +61,15 @@ export default class ActivityForm extends Component {
                     <form onSubmit={this.handleOnSubmit}>
                         <DialogContentText>
 
-                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="name" label="Name" value={this.state.activity.name} variant="outlined" /></DialogContent>
-                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="type" label="Type" variant="outlined" value={this.state.activity.type} /></DialogContent>
+                            <DialogContent><TextField required fullWidth onChange={this.onValueChange} name="name" label="Name" value={this.state.activity.name} variant="outlined" /></DialogContent>
+                            <DialogContent><TextField required fullWidth onChange={this.onValueChange} name="type" label="Type" variant="outlined" value={this.state.activity.type} /></DialogContent>
                             <DialogContent><TextField fullWidth onChange={this.onValueChange} name="detail" label="Detail" variant="outlined" multiline rows={4} value={this.state.activity.detail} /></DialogContent>
-                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="timeFrom" label="Start Date" value={this.state.activity.timeFrom} type="date" InputLabelProps={{ shrink: true }} /></DialogContent>
-                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="timeTo" label="End Time" value={this.state.activity.timeTo} type="date" InputLabelProps={{ shrink: true }} /></DialogContent>
+                            <DialogContent><TextField required fullWidth onChange={this.onValueChange} name="timeFrom" label="Start Date" value={this.state.activity.timeFrom} type="date" InputLabelProps={{ shrink: true }} /></DialogContent>
+                            <DialogContent><TextField required fullWidth onChange={this.onValueChange} name="timeTo" label="End Time" value={this.state.activity.timeTo} type="date" InputLabelProps={{ shrink: true }} /></DialogContent>
                             <DialogContent>
                                 <InputLabel id="select-label">Select a project</InputLabel>
                                 <Select
+                                    required
                                     labelId="select-label"
                                     fullWidth
                                     name="project"
