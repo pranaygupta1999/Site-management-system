@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 });
 
 //=================Routes==============
-app.use('/api/user', userRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/projects', projectsRoutes);
 app.use('/api/activities', activitiesRoutes);
 app.use('/api/expenses', expensesRoutes);
