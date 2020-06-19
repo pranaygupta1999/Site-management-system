@@ -2,15 +2,18 @@
  * @author Pranay Gupta
  * @date 15 June 2020
  */
-
+// ========== Imports===============
 const express = require('express')
 const app = express();
 const userRoutes = require('./routes/user');
 const projectsRoutes = require('./routes/projects')
 const activitiesRoutes = require('./routes/activities')
 const expensesRoutes = require('./routes/expenses');
+const path = require('path')
 const port = process.env.PORT || 5000;
 
+
+// ============= Middlewares =================
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use((req, res, next) => {
@@ -42,6 +45,14 @@ mongoose.connect(`mongodb://pranay:${process.env.MONGO_PASSWORD}@cluster0-shard-
     console.log("Connected")
   }
 });
+
+//============ PRODUCTION ============
+if (process.env.NODE_ENV.toLowerCase() === 'production') {
+  app.use(express.static('/client/build'));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 app.listen(port, () => console.log("Server running on " + port));
 
