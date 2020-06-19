@@ -49,7 +49,7 @@ export default class Activities extends Component {
 
     deleteActivity = async (id) => {
         this.setState({ isUploading: true });
-        const fetchData = await fetch("http://localhost:5000/api/activities/delete/" + id, { method: "delete" });
+        const fetchData = await fetch(SERVER_URL + "/api/activities/delete/" + id, { method: "delete" });
         this.setState({ isUploading: false })
         if (fetchData.status === 200) {
             this.setState({ showSnackbar: true, message: "Successfully deleted" });
@@ -80,7 +80,7 @@ export default class Activities extends Component {
 
     async reload() {
         this.setState({ isContentLoading: true });
-        const data = await fetch("http://localhost:5000/api/activities/getAll");
+        const data = await fetch(SERVER_URL + "/api/activities/getAll");
         const activities = await data.json();
         activities.forEach(activity => {
             activity.timeTo = activity.timeTo?.split('T')[0];

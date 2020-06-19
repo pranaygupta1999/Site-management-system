@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Dialog, DialogTitle, DialogContentText, TextField, Button, DialogActions, DialogContent, MenuItem, Select, InputLabel } from "@material-ui/core";
-
+import SERVER_URL from '../../config'
 export default class ActivityForm extends Component {
     constructor(props) {
         super(props);
@@ -26,7 +26,7 @@ export default class ActivityForm extends Component {
         }
     }
     async componentDidMount() {
-        const data = await fetch("http://localhost:5000/api/projects/getnames");
+        const data = await fetch(SERVER_URL + "/api/projects/getnames");
         const projectsList = await data.json();
         this.setState({ projectsList: projectsList });
     }

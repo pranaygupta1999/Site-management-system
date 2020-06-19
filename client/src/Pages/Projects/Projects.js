@@ -49,7 +49,7 @@ export default class Projects extends Component {
     }
     deleteProject = async (id) => {
         this.setState({ isUploading: true });
-        const fetchData = await fetch("http://localhost:5000/api/projects/delete/" + id, { method: "delete" });
+        const fetchData = await fetch(SERVER_URL + "/api/projects/delete/" + id, { method: "delete" });
         this.setState({ isUploading: false })
         if (fetchData.status === 200) {
             this.setState({ showSnackbar: true, message: "Successfully deleted" });
@@ -79,7 +79,7 @@ export default class Projects extends Component {
     }
     async reload() {
         this.setState({ isContentLoading: true });
-        const data = await fetch("http://localhost:5000/api/projects/getAll");
+        const data = await fetch(SERVER_URL + "/api/projects/getAll");
         const projects = await data.json();
         projects.forEach(project => {
             console.log(project);
