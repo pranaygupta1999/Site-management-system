@@ -1,5 +1,24 @@
 db.projects.remove({});
 db.activities.remove({});
+db.users.remove({});
+db.users.insertMany([
+    {
+        "_id": ObjectId("5ee8670e80a8b76200fd67d1"),
+        "name": "Pranay",
+        "email": "pranaygupta1999@gmail.com",
+        "role": "master-admin",
+        "password": "masteradmin",
+        "dateCreated": new Date()
+    },
+    {
+        "role": "guest",
+        "name": "Pranay Test",
+        "email": "pranay@edunomics.in",
+        "password": "$2b$10$24ClcSV4a1YFJ9jKktMZpeuTpGOWRSemSroo3DKtKHuk8xMKQjRTi",
+        "dateCreated": new Date()
+    }
+]);
+
 db.projects.insertMany([
     {
         name: "Gupta towers",
@@ -145,7 +164,7 @@ db.expenses.insertMany([
         amount: 500,
         status: "due",
         project: db.projects.findOne({ name: "Gupta towers" }, { _id: 1 })._id,
-        image:"cash",
+        image: "cash",
         date: new Date("2019-05-06"),
         dateCreated: new Date()
     },
@@ -155,7 +174,7 @@ db.expenses.insertMany([
         amount: 5000,
         status: "paid",
         project: db.projects.findOne({ name: "Gupta towers" }, { _id: 1 })._id,
-        image:"cash",
+        image: "cash",
         date: new Date("2018-03-06"),
         dateCreated: new Date()
     },
@@ -165,7 +184,7 @@ db.expenses.insertMany([
         amount: 2500000,
         status: "due",
         project: db.projects.findOne({ name: "Gupta towers" }, { _id: 1 })._id,
-        image:"check",
+        image: "check",
         date: new Date("2016-03-20"),
         dateCreated: new Date()
     },
@@ -175,7 +194,7 @@ db.expenses.insertMany([
         amount: 2000000,
         status: "paid",
         project: db.projects.findOne({ name: "Pratik Consultancy" }, { _id: 1 })._id,
-        image:"check",
+        image: "check",
         date: new Date("2019-02-25"),
         dateCreated: new Date()
     },
@@ -185,7 +204,7 @@ db.expenses.insertMany([
         amount: 50000,
         status: "paid",
         project: db.projects.findOne({ name: "Pratik Consultancy" }, { _id: 1 })._id,
-        image:"neft",
+        image: "neft",
         date: new Date("2020-02-02"),
         dateCreated: new Date()
     },
@@ -195,7 +214,7 @@ db.expenses.insertMany([
         amount: 25000,
         status: "paid",
         project: db.projects.findOne({ name: "Pratik Consultancy" }, { _id: 1 })._id,
-        image:"cash",
+        image: "cash",
         date: new Date("2019-12-06"),
         dateCreated: new Date()
     },
@@ -205,7 +224,7 @@ db.expenses.insertMany([
         amount: 20000,
         status: "paid",
         project: db.projects.findOne({ name: "Pranay mount" }, { _id: 1 })._id,
-        image:"check",
+        image: "check",
         date: new Date("2019-06-30"),
         dateCreated: new Date()
     },
@@ -215,7 +234,7 @@ db.expenses.insertMany([
         amount: 100000,
         status: "paid",
         project: db.projects.findOne({ name: "Pranay mount" }, { _id: 1 })._id,
-        image:"neft",
+        image: "neft",
         date: new Date(),
         dateCreated: new Date()
     }
