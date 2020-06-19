@@ -29,7 +29,7 @@ export default function (props) {
                 </CardContent>
                 <Divider light />
                 <CardActions>
-                    <Button size="small" color="primary" startIcon={<EditIcon />}>
+                    <Button size="small" color="primary" startIcon={<EditIcon />} onClick={() => props.onEdit(props.activity)}>
                         Edit
                     </Button>
                     <Button size="small" color="secondary" startIcon={<DeleteIcon />} onClick={() => props.onDelete(props.activity._id)}>

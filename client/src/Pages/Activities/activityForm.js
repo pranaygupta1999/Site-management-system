@@ -4,9 +4,9 @@ import { Dialog, DialogTitle, DialogContentText, TextField, Button, DialogAction
 export default class ActivityForm extends Component {
     constructor(props) {
         super(props);
-        console.log("running again")
         if (props.activity) {
-            this.state = { activity: { ...this.props.activity }, projectName: "", projectsList: [], projectId: "" };
+            this.state = { activity: { ...this.props.activity }, projectsList: [], projectId: "", projectName: this.props.activity.project.name };
+            this.onSaveClickHandler = this.props.onEdit;
         }
         else {
             this.state = {
@@ -22,6 +22,7 @@ export default class ActivityForm extends Component {
                 projectId: "",
                 projectsList: []
             };
+            this.onSaveClickHandler = this.props.onSave;
         }
     }
     async componentDidMount() {
@@ -36,15 +37,16 @@ export default class ActivityForm extends Component {
         this.setState({ activity: activity });
     }
     onProjectValueChange = (e) => {
-        const projectId = this.state.projectsList[e.target.getAttribute('data-index')]._id;
-        this.setState({ projectId: projectId });
+        let project = this.state.projectsList[e.target.getAttribute('data-index')]
+        const projectId = project._id;
+        this.setState({ projectId: projectId, projectName: project.name });
 
     }
     handleOnSubmit = async (e) => {
         e.preventDefault();
         const activitytBody = this.state.activity;
-        activitytBody.project = this.state.projectId;
-        this.props.onSave(activitytBody);
+        activitytBody.project = this.state.projectId || this.state.activity.project._id;
+        this.onSaveClickHandler(activitytBody);
         this.props.onClose();
 
     }
@@ -59,18 +61,19 @@ export default class ActivityForm extends Component {
                     <form onSubmit={this.handleOnSubmit}>
                         <DialogContentText>
 
-                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="name" label="Name" value={this.state.name} variant="outlined" /></DialogContent>
-                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="type" label="Type" variant="outlined" value={this.state.type} /></DialogContent>
-                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="detail" label="Detail" variant="outlined" multiline rows={4} value={this.state.detail} /></DialogContent>
-                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="timeFrom" label="Start Date" value={this.state.timeFrom} type="datetime-local" InputLabelProps={{ shrink: true }} /></DialogContent>
-                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="timeTo" label="End Time" value={this.state.timeTo} type="datetime-local" InputLabelProps={{ shrink: true }} /></DialogContent>
+                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="name" label="Name" value={this.state.activity.name} variant="outlined" /></DialogContent>
+                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="type" label="Type" variant="outlined" value={this.state.activity.type} /></DialogContent>
+                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="detail" label="Detail" variant="outlined" multiline rows={4} value={this.state.activity.detail} /></DialogContent>
+                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="timeFrom" label="Start Date" value={this.state.activity.timeFrom} type="date" InputLabelProps={{ shrink: true }} /></DialogContent>
+                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="timeTo" label="End Time" value={this.state.activity.timeTo} type="date" InputLabelProps={{ shrink: true }} /></DialogContent>
                             <DialogContent>
                                 <InputLabel id="select-label">Select a project</InputLabel>
                                 <Select
                                     labelId="select-label"
                                     fullWidth
                                     name="project"
-                                    value={this.state.project}
+                                    value={this.state.projectName}
+                                    displayEmpty
                                     onChange={this.onValueChange}
                                 >
                                     {this.state.projectsList.map((project, index) =>

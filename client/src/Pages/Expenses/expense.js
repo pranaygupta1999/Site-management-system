@@ -30,7 +30,7 @@ export default function Expense(props) {
                             <TableCell align="right">{expense.image}</TableCell>
                             <TableCell >{new Date(expense.date).toDateString()}</TableCell>
                             <TableCell >
-                                <IconButton><EditIcon /></IconButton>
+                                <IconButton onClick={() => props.onEdit(expense)}><EditIcon /></IconButton>
                                 <IconButton color="secondary" onClick={() => props.onDelete(expense._id)}><DeleteIcon /></IconButton>
                             </TableCell>
                         </TableRow>

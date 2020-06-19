@@ -8,7 +8,7 @@ import Spinner from '../../components/spinner'
 import ContentLoading from '../../components/contentLoading'
 import SERVER_URL from '../../config'
 export default class Activities extends Component {
-    state = { activities: [], isActivityFormOpen: false, showSnackbar: false, message: "", projectsList: [], isUploading: false, isContentLoading: true }
+    state = { activities: [], isActivityFormOpen: false, showSnackbar: false, message: "", activitiesList: [], isUploading: false, isContentLoading: true, editActivity: null }
 
     toggleActivityFormClose = () => {
         this.setState((prevState) => {
@@ -16,11 +16,15 @@ export default class Activities extends Component {
         });
     }
     handleActivityFormClose = () => {
-        this.setState({ isActivityFormOpen: false });
+        this.setState({ isActivityFormOpen: false, editActivity: null });
     }
     handleSnackBarClose = () => {
         this.setState({ showSnackbar: false, message: "" });
+    }
 
+    handleEdit = (activity) => {
+        this.toggleActivityFormClose();
+        this.setState({ editActivity: activity });
     }
 
     // =============== API Requests ===================
@@ -55,11 +59,34 @@ export default class Activities extends Component {
         }
         this.reload();
     }
+    editActivityInDatabase = async (activityBody) => {
+        this.setState({ isUploading: true })
+        const fetchData = await fetch(SERVER_URL + "/api/activities/edit", {
+            method: "put",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(activityBody)
+        });
+        this.setState({ isUploading: false })
+        if (fetchData.status === 200) {
+            this.setState({ showSnackbar: true, message: "Successfully edited" });
+        }
+        else {
+            this.setState({ showSnackbar: true, message: "Could not edit Activity" });
+        }
+        this.reload();
+    }
 
     async reload() {
         this.setState({ isContentLoading: true });
         const data = await fetch("http://localhost:5000/api/activities/getAll");
         const activities = await data.json();
+        activities.forEach(activity => {
+            activity.timeTo = activity.timeTo?.split('T')[0];
+            activity.timeFrom = activity.timeFrom?.split('T')[0];
+        });
+
         this.setState({ activities: activities });
         this.setState({ isContentLoading: false });
     }
@@ -76,7 +103,7 @@ export default class Activities extends Component {
                             <ContentLoading /> :
                             <Grid container spacing={3}>
                                 {this.state.activities.length && this.state.activities.map((activity, index) => {
-                                    return (<Activity eventKey={index} activity={activity} onDelete={this.deleteActivity} />)
+                                    return (<Activity eventKey={index} activity={activity} onDelete={this.deleteActivity} onEdit={this.handleEdit} />)
                                 })}
                             </Grid>
                     }
@@ -85,7 +112,7 @@ export default class Activities extends Component {
                 <div>
                     {
                         this.state.isActivityFormOpen ?
-                            <ActivityForm open={this.state.isActivityFormOpen} onClose={this.handleActivityFormClose} onSave={this.addActivityToDatabase} />
+                            <ActivityForm open={this.state.isActivityFormOpen} onClose={this.handleActivityFormClose} onSave={this.addActivityToDatabase} onEdit={this.editActivityInDatabase} activity={this.state.editActivity} />
                             :
                             null
                     }
