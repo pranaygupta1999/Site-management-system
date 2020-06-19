@@ -5,10 +5,10 @@ import Login from "./Pages/Login/Login"
 import { UserContext } from "./Context/UserContext";
 
 function App() {
-  let [loggedIn, setLoggedIn] = useState(localStorage.user);
-  function onLogin(uname) {
-    localStorage.user = { name: uname };
-    setLoggedIn(localStorage.user);
+  let [loggedIn, setLoggedIn] = useState(localStorage['user']);
+  function onLogin(user) {
+    localStorage['user'] = user;
+    setLoggedIn(user);
   }
   return (
     <React.Fragment>
