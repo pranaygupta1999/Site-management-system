@@ -34,7 +34,7 @@ app.use('/api/expenses', expensesRoutes);
 
 //==============db connection==================
 const mongoose = require('mongoose');
-mongoose.connect("mongodb://127.0.0.1:27017/test", (err) => {
+mongoose.connect(`mongodb://pranay:${process.env.MONGO_PASSWORD}@cluster0-shard-00-00-o3oki.mongodb.net:27017,cluster0-shard-00-01-o3oki.mongodb.net:27017,cluster0-shard-00-02-o3oki.mongodb.net:27017/edunomics?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority`, { useUnifiedTopology: true, useNewUrlParser: true }, (err) => {
   if (err) {
     console.error(err)
   }
