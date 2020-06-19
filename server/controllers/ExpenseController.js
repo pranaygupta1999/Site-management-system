@@ -31,5 +31,14 @@ module.exports = {
         } catch (error) {
             res.status(500).json({ msg: "Could not delete activity", err: error });
         }
+    },
+    editExpense: async function (req, res) {
+        try {
+            const result = await Expense.updateOne({ _id: req.body._id }, { $set: req.body });
+            res.status(200).json({ msg: "Expense deleted successfully", details: result });
+        } catch (error) {
+            res.status(500).json({ msg: "Could not update expense", err: error });
+
+        }
     }
 }
