@@ -63,9 +63,9 @@ export default class ExpenseForm extends Component {
                     <form onSubmit={this.handleOnSubmit}>
                         <DialogContentText>
 
-                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="type" label="Type" variant="outlined" value={this.state.expense.type} /></DialogContent>
+                            <DialogContent><TextField required fullWidth onChange={this.onValueChange} name="type" label="Type" variant="outlined" value={this.state.expense.type} /></DialogContent>
                             <DialogContent><TextField fullWidth onChange={this.onValueChange} name="detail" label="Detail" variant="outlined" multiline rows={4} value={this.state.expense.detail} /></DialogContent>
-                            <DialogContent><TextField fullWidth onChange={this.onValueChange} name="amount" label="Amount" variant="outlined" type="number" value={this.state.expense.amount} /></DialogContent>
+                            <DialogContent><TextField required fullWidth onChange={this.onValueChange} name="amount" label="Amount" variant="outlined" type="number" value={this.state.expense.amount} /></DialogContent>
                             <DialogContent><TextField fullWidth onChange={this.onValueChange} name="status" label="Status" variant="outlined" value={this.state.expense.status} /></DialogContent>
                             <DialogContent><TextField fullWidth onChange={this.onValueChange} name="image" label="Mode" variant="outlined" value={this.state.expense.image} /></DialogContent>
                             <DialogContent><TextField fullWidth onChange={this.onValueChange} name="date" label="Date" value={this.state.expense.date} type="date" InputLabelProps={{ shrink: true }} /></DialogContent>
