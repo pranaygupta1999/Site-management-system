@@ -1,6 +1,7 @@
 const Project = require("../models/ProjectModel");
 const { validationResult } = require('express-validator')
-
+const Activity = require("../models/ActivityModel");
+const Expense = require("../models/ExpenseModel");
 module.exports = {
     getAllProjects: async function (req, res) {
         const projects = await Project.find();
@@ -76,6 +77,8 @@ module.exports = {
     deleteProject: async function (req, res) {
         try {
             const result = await Project.remove({ _id: req.params.id });
+            const result2 = await Activity.remove({ project: req.params.id });
+            const result3 = await Expense.remove({ project: req.params.id });
             res.status(200).json({ msg: "Project deleted successfully", details: result });
         } catch (error) {
             res.status(500).json({ msg: "Could not delete project", err: error });
